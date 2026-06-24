@@ -1,3 +1,5 @@
+// 1. Cargamos la librería para leer el archivo secreto .env
+require('dotenv').config();
 const { Client, GatewayIntentBits } = require('discord.js');
 
 const client = new Client({
@@ -34,7 +36,8 @@ client.on('guildMemberAdd', async (member) => {
         // Buscamos cuál link aumentó su contador de usos en la base de datos
         const inviteUsed = newInvites.find(i => oldInvites && i.uses > (oldInvites.get(i.code) || 0));
         
-        // === CAMBIA ESTO (Línea 34): Pon el ID largo de tu canal de bienvenidas ===
+        // === TU ID DE CANAL ===
+        // REEMPLAZA ESTO: Pon el ID de tu canal de bienvenidas manteniendo las comillas simples
         const welcomeChannel = member.guild.channels.cache.get('1519204854197784617');
         
         if (!welcomeChannel) return console.log("No encontré el canal de texto.");
@@ -54,5 +57,5 @@ client.on('guildMemberAdd', async (member) => {
     }
 });
 
-// === CAMBIA ESTO (Línea 53): Pon tu Token secreto del portal de Discord ===
-client.login('MTUxOTIzMjMyMDU2ODE2NDQxMw.GGPb6n.wN75TRXUTcgQuaVkj-LQ-are5sIAuW4SqBvF-8');
+// 2. Protegemos el token llamándolo desde el archivo oculto .env
+client.login(process.env.DISCORD_TOKEN);
